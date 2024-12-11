@@ -1,0 +1,44 @@
+{
+  "name": "frontend",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "eslint": "npx eslint --fix src"
+  },
+  "dependencies": {
+    "@reduxjs/toolkit": "^2.5.0",
+    "@types/node": "^16.18.13",
+    "@types/react": "^18.0.28",
+    "@types/react-dom": "^18.0.11",
+    "@typescript-eslint/parser": "^5.42.1",
+    "@vitejs/plugin-react": "^3.1.0",
+    "axios": "^1.7.9",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "javascript-color-gradient": "^2.5.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.8.1",
+    "sass": "^1.82.0",
+    "typescript": "^4.9.5",
+    "vite": "^4.4.3",
+    "vite-plugin-dts": "^2.0.2",
+    "vite-tsconfig-paths": "^4.0.5"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.42.1",
+    "@typescript-eslint/parser": "^5.21.0",
+    "autoprefixer": "^10.4.14",
+    "eslint": "^8.27.0",
+    "eslint-config-standard-with-typescript": "^23.0.0",
+    "eslint-import-resolver-typescript": "^3.5.2",
+    "eslint-plugin-import": "^2.27.4",
+    "eslint-plugin-n": "^15.5.1",
+    "eslint-plugin-promise": "^6.1.1",
+    "eslint-plugin-react": "^7.31.10",
+    "prettier": "^2.8.4",
+    "prettier-plugin-organize-imports": "^3.2.2"
+  }
+}
