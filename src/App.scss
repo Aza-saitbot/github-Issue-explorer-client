@@ -1,0 +1,11 @@
+.app {
+  background-color: #646cff;
+  padding: 10px;
+
+
+  &__block {
+    height: 100px;
+    width: 100px;
+    background-color: red;
+  }
+}
