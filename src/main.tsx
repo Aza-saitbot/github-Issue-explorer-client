@@ -4,12 +4,11 @@ import App from '@src/App';
 import {BrowserRouter} from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './app/store';
-import './styles/main.scss';
 
 
 createRoot(document.getElementById('root') as HTMLElement).render(
   <Provider store={store}>
-    <BrowserRouter>
+    <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
       <App />
     </BrowserRouter>
   </Provider>

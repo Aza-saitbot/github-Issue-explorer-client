@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import {IIssue} from '@src/modules/issues/models';
 import {fetchIssuesAPI} from '@src/modules/issues/api';
+import issuesMock from '@src/mock.json';
 
 export const fetchIssues = createAsyncThunk(
   'issues/fetchIssues',
@@ -9,14 +10,20 @@ export const fetchIssues = createAsyncThunk(
     return response.data;
   }
 );
+interface IInitialState {
+  issues: IIssue[],
+  isLoading: boolean
+  hasMore: boolean
+}
+const initialState:IInitialState = {
+  issues: issuesMock as IIssue[],
+  isLoading: false,
+  hasMore: true,
+}
 
 const issuesSlice = createSlice({
   name: 'issues',
-  initialState: {
-    issues: [] as IIssue[],
-    isLoading: false,
-    hasMore: true,
-  },
+  initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder

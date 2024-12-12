@@ -1,16 +1,17 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import IssueList from './modules/issues/components/IssueList';
-import IssueDetails from './modules/issues/components/IssueDetails';
+import { Route, Routes } from 'react-router-dom';
+import {IssueDetails, IssueList} from './modules/issues';
+import './App.scss'
+import Header from '@src/components/Header/Header';
 
 const App = () => {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<IssueList />} />
-        <Route path="/issue/:id" element={<IssueDetails />} />
-      </Routes>
-    </Router>
+      <div className={'app'}>
+        <Header/>
+        <Routes>
+          <Route path="/" element={<IssueList />} />
+          <Route path="/issue/:id" element={<IssueDetails />} />
+        </Routes>
+      </div>
   );
 };
 
