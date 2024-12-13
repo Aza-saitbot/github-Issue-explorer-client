@@ -29,7 +29,6 @@ export const IssueList: React.FC = () => {
 
   const scrollToTop = ()=> followScrollRef?.current?.scrollTo({ top: 0, behavior: 'smooth' })
 
-console.log('issues',issues.length)
 
   const handleScroll = useCallback(() => {
     if (followScrollRef.current) {

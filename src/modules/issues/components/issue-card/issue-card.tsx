@@ -16,7 +16,7 @@ export const IssueCard: React.FC = () => {
 
 
   if (!issue) return <p>Issue not found</p>;
-  console.log('issue', issue)
+
   return (
     <div className="details">
       <div className={'details__header'}>
