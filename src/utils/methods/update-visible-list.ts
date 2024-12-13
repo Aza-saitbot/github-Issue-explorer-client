@@ -10,7 +10,7 @@ const calculateVisibleItems = <T>(page: number, items: T[]) => {
 
 export const updateVisibleList = <T>(list: T[], page: number, setVisibleItems: Dispatch<SetStateAction<T[]>>) => {
   const newVisibleItems = calculateVisibleItems(page, list);
-console.log('newVisibleItems',newVisibleItems)
+
   if (page === 1) {
     setVisibleItems(newVisibleItems);
   } else {

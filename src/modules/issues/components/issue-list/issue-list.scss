@@ -1,16 +1,12 @@
 .list {
   display: grid;
   position: relative;
-  overflow: auto;
+  max-height: calc(100vh - 80px);
+  overflow-y: auto;
   height: 100%;
 
-  &__bottomPointer {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 50px;
-    background-color: red;
+  &_bottomPointer {
+    height: 20px;
   }
 
 

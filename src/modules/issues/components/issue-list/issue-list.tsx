@@ -25,6 +25,9 @@ console.log('issues',issues[0])
     pageRef.current += 1;
     updateVisibleList<IIssue>(issues, pageRef.current, setVisibleIssues);
   });
+
+  const scrollToTop = ()=> followScrollRef?.current?.scrollTo({ top: 0, behavior: 'smooth' })
+
 console.log('issues',issues.length)
 
   const handleScroll = useCallback(() => {
@@ -32,6 +35,7 @@ console.log('issues',issues.length)
       setShowScrollButton(followScrollRef.current.scrollTop > SCROLL_THRESHOLD)
     }
   },[followScrollRef.current]);
+
   useEffect(() => {
     pageRef.current = 1;
     updateVisibleList<IIssue>(issues, pageRef.current, setVisibleIssues);
@@ -55,11 +59,10 @@ console.log('issues',issues.length)
   //     dispatch(fetchIssues(pageRef.current));
   //   }
   // }, [pageRef.current]);
-  
-  console.log('showScrollButton',showScrollButton)
+
 
   if (isLoading) return <Spinner />;
-
+console.log('visibleIssues',visibleIssues)
   return (
     <div ref={followScrollRef} className="list">
       {visibleIssues.map(issue => (
@@ -79,8 +82,9 @@ console.log('issues',issues.length)
           </div>
         </div>
       ))}
-      <button className={`button-up ${showScrollButton ? 'show' : ''}`}><ArrowIcon className={'button-up__icon'} /></button>
-      <div className={'list__bottomPointer'} ref={bottomPointerRef}></div>
+      <button onClick={scrollToTop} className={`button-up ${showScrollButton ? 'show' : ''}`}><ArrowIcon className={'button-up__icon'} /></button>
+
+      <div className={'list_bottomPointer'} ref={bottomPointerRef}></div>
     </div>
   );
 };
