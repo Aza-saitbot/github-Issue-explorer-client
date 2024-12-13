@@ -8,12 +8,13 @@ import {IIssue} from '@src/modules/issues/models';
 import {useIntersectionObserver} from '@src/utils/hooks/use-intersection-observer';
 import {updateVisibleList} from '@src/utils/methods/update-visible-list';
 import {ArrowIcon} from '@src/assets/icons/Arrow.icon';
+import {Link} from 'react-router-dom';
+import IssueState from '@src/modules/issues/components/issue-state/issue-state';
 
 const SCROLL_THRESHOLD = 200;
 export const IssueList: React.FC = () => {
   const dispatch = useAppDispatch();
   const { issues, isLoading, hasMore } = useAppSelector((state) => state.issues);
-console.log('issues',issues[0])
 
   const pageRef = useRef(1);
   const followScrollRef = useRef<HTMLDivElement | null>(null);
@@ -62,11 +63,11 @@ console.log('issues',issues.length)
 
 
   if (isLoading) return <Spinner />;
-console.log('visibleIssues',visibleIssues)
+
   return (
     <div ref={followScrollRef} className="list">
       {visibleIssues.map(issue => (
-        <div className="list__item" key={issue.id}>
+        <Link className="list__item" key={issue.id} to={`/issues/${issue.number}`} >
           <div className="list__item_title">
             <img className={'avatar'} src={issue.user.avatar_url} alt={'avatar'} />
             <div>
@@ -76,11 +77,10 @@ console.log('visibleIssues',visibleIssues)
           </div>
           <div className={'list__item_info'}>
             <p>{moment(issue.created_at).format('DD.MM.YYYY')}</p>
-            <div className={issue.state !==  EIssueState.OPEN ? 'open' : 'closed'}>
-              {issue.state}
-            </div>
+            <IssueState state={issue.state}/>
+            <span>{issue.comments}</span>
           </div>
-        </div>
+        </Link>
       ))}
       <button onClick={scrollToTop} className={`button-up ${showScrollButton ? 'show' : ''}`}><ArrowIcon className={'button-up__icon'} /></button>
 

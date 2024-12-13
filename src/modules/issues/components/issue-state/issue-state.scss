@@ -1,0 +1,16 @@
+
+.state {
+  padding: 0 5px;
+  border-radius: 5px;
+  width: fit-content;
+
+  &.open {
+    background-color: rgba(161, 255, 149, 0.71);
+    color: green;
+  }
+
+  &.closed {
+    background-color: rgba(255, 215, 205, 0.71);
+    color: red;
+  }
+}

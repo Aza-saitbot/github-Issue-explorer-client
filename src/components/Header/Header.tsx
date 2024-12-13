@@ -5,7 +5,6 @@ const Header = () => {
     <div className={'header'}>
       <GithubIcon className={'header__icon'}/>
       <span>Github Issue Explorer</span>
-
     </div>
   );
 };

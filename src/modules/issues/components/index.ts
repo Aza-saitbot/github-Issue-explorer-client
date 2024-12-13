@@ -1,3 +1,3 @@
 export {Spinner} from './spinner/spinner';
 export {IssueList} from './issue-list/issue-list';
-export {IssueDetails} from './issue-details/issue-details';
+export {IssueCard} from './issue-card/issue-card';

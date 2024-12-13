@@ -147,6 +147,14 @@
     "locked": false,
     "assignee": null,
     "assignees": [
+      {
+        "login": "sebmarkbage",
+        "id": 63648,
+        "node_id": "MDQ6VXNlcjYzNjQ4",
+        "avatar_url": "https://avatars.githubusercontent.com/u/63648?v=4",
+        "gravatar_id": ""
+
+      }
 
     ],
     "milestone": null,
