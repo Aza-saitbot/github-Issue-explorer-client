@@ -3,9 +3,9 @@ import {Link, useParams} from 'react-router-dom';
 import {useAppSelector} from '@src/modules/issues/hooks/hooks';
 import './issue-card.scss'
 import {ArrowIcon} from '@src/assets/icons/Arrow.icon';
-import IssueState from '@src/modules/issues/components/issue-state/issue-state';
 import moment from 'moment/moment';
 import ReactMarkdown from 'react-markdown';
+import {IssueState} from '@src/modules/issues';
 
 
 export const IssueCard: React.FC = () => {

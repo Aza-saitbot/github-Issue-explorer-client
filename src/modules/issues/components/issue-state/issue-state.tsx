@@ -6,10 +6,8 @@ import './issue-state.scss'
 interface IIssueStateProps {
   state:EIssueState
 }
-const IssueState:FC<IIssueStateProps> = ({state}) => (
+export const IssueState:FC<IIssueStateProps> = ({state}) => (
   <div className={`state ${state ===  EIssueState.OPEN ? 'open' : 'closed'}`}>
     {state}
   </div>
 )
-
-export default IssueState;

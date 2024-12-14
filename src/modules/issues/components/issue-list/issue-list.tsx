@@ -1,15 +1,15 @@
-import React, {useCallback, useEffect, useRef, useState } from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {useAppDispatch, useAppSelector} from '@src/modules/issues/hooks/hooks';
-import {fetchIssues, Spinner} from '@src/modules/issues';
 import './issue-list.scss'
 import moment from 'moment';
-import {EIssueState} from '@src/modules/issues/models/enums/issue-state';
 import {IIssue} from '@src/modules/issues/models';
 import {useIntersectionObserver} from '@src/utils/hooks/use-intersection-observer';
 import {updateVisibleList} from '@src/utils/methods/update-visible-list';
 import {ArrowIcon} from '@src/assets/icons/Arrow.icon';
 import {Link} from 'react-router-dom';
-import IssueState from '@src/modules/issues/components/issue-state/issue-state';
+import {CircularProgress} from '@mui/material';
+import {IssueState} from '@src/modules/issues';
+
 
 const SCROLL_THRESHOLD = 200;
 export const IssueList: React.FC = () => {
@@ -61,7 +61,7 @@ export const IssueList: React.FC = () => {
   // }, [pageRef.current]);
 
 
-  if (isLoading) return <Spinner />;
+  if (!isLoading) return <CircularProgress/>;
 
   return (
     <div ref={followScrollRef} className="list">

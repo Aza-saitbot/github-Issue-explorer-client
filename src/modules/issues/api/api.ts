@@ -1,5 +1,6 @@
-import axios from 'axios';
+import axiosInstance from '@src/api/axios-instance';
+import {IIssueRequestDTO} from '@src/modules/issues/models';
 
-export const fetchIssuesAPI = (page: number) => {
-  return axios.get(`/api/issues?page=${page}`);
+export const fetchIssuesAPI = (dto:IIssueRequestDTO) => {
+  return axiosInstance.get(`/api/issues?user=${dto.userName}&repo=${dto.repoName}`);
 };
