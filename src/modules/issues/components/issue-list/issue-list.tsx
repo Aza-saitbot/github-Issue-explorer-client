@@ -8,7 +8,9 @@ import {updateVisibleList} from '@src/utils/methods/update-visible-list';
 import {ArrowIcon} from '@src/assets/icons/Arrow.icon';
 import {Link} from 'react-router-dom';
 import {CircularProgress} from '@mui/material';
-import {IssueState} from '@src/modules/issues';
+import {IssueSearch, IssueState} from '@src/modules/issues';
+import {LoaderPage} from '@src/components/loader-page/loader-page';
+import {EmptyPage} from '@src/components/empty-page/empty-page';
 
 
 const SCROLL_THRESHOLD = 200;
@@ -61,29 +63,33 @@ export const IssueList: React.FC = () => {
   // }, [pageRef.current]);
 
 
-  if (!isLoading) return <CircularProgress/>;
+  if (!isLoading) return <EmptyPage/>
+  if (isLoading) return <LoaderPage/>;
 
   return (
-    <div ref={followScrollRef} className="list">
-      {visibleIssues.map(issue => (
-        <Link className="list__item" key={issue.id} to={`/issues/${issue.number}`} >
-          <div className="list__item_title">
-            <img className={'avatar'} src={issue.user.avatar_url} alt={'avatar'} />
-            <div>
-              <div>{issue.title}</div>
-              <span>id: {issue.number}</span>
+    <div className={'content'}>
+      <IssueSearch/>
+      <div ref={followScrollRef} className="list">
+        {visibleIssues.map(issue => (
+          <Link className="list__item" key={issue.id} to={`/issues/${issue.number}`} >
+            <div className="list__item_title">
+              <img className={'avatar'} src={issue.user.avatar_url} alt={'avatar'} />
+              <div>
+                <div>{issue.title}</div>
+                <span>id: {issue.number}</span>
+              </div>
             </div>
-          </div>
-          <div className={'list__item_info'}>
-            <p>{moment(issue.created_at).format('DD.MM.YYYY')}</p>
-            <IssueState state={issue.state}/>
-            <span>{issue.comments}</span>
-          </div>
-        </Link>
-      ))}
-      <button onClick={scrollToTop} className={`button-up ${showScrollButton ? 'show' : ''}`}><ArrowIcon className={'button-up__icon'} /></button>
+            <div className={'list__item_info'}>
+              <p>{moment(issue.created_at).format('DD.MM.YYYY')}</p>
+              <IssueState state={issue.state}/>
+              <span>{issue.comments}</span>
+            </div>
+          </Link>
+        ))}
+        <button onClick={scrollToTop} className={`button-up ${showScrollButton ? 'show' : ''}`}><ArrowIcon className={'button-up__icon'} /></button>
 
-      <div className={'list_bottomPointer'} ref={bottomPointerRef}></div>
+        <div className={'list_bottomPointer'} ref={bottomPointerRef}></div>
+      </div>
     </div>
   );
 };

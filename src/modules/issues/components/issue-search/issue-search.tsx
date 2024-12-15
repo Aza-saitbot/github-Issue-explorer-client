@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
 import {TextField} from '@mui/material';
-import './input-search.scss'
+import './issue-search.scss'
 import {useAppDispatch} from '@src/modules/issues/hooks/hooks';
 import { fetchIssues } from '../../store';
 
-export const InputSearch = () => {
+export const IssueSearch = () => {
   const [userName, setUserName] = useState<string>('');
   const [repoName, setRepoName] = useState<string>('');
   const dispatch = useAppDispatch();
