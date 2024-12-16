@@ -1,6 +1,7 @@
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {IIssue, IIssuesRequestDTO} from '@src/modules/issues/models';
+import {IErrorResponse, IIssue, IIssuesRequestDTO} from '@src/modules/issues/models';
 import {fetchIssuesAPI} from '@src/modules/issues/api';
+import {AxiosError} from 'axios';
 // import issuesMock from '@src/mock.json';
 
 export const fetchIssues = createAsyncThunk<IIssue[], IIssuesRequestDTO, { rejectValue: string }>(
@@ -9,11 +10,10 @@ export const fetchIssues = createAsyncThunk<IIssue[], IIssuesRequestDTO, { rejec
     try {
       const response = await fetchIssuesAPI(requestDto);
       return response.data;
-    } catch (e: unknown) { 
-      if (e instanceof Error) { 
-        return rejectWithValue(e.message); 
-      }
-      return rejectWithValue('Произошла ошибка'); 
+    } catch (e: unknown) {
+      const axiosError = e as AxiosError<IErrorResponse>;
+      const message = axiosError.response?.data?.message || 'Произошла ошибка';
+      return rejectWithValue(message);
     }
   }
 );

@@ -26,33 +26,37 @@ export const IssueSearch = () => {
     if (error) {
       const timer = setTimeout(() => {
         dispatch(setError(null));
-      }, 2000);
+      }, 3000);
 
       return () => clearTimeout(timer);
     }
   }, [error]);
 
   return (
-    <div className={'input-search'}>
+    <div className={'search'}>
       {error ? <Alert className={'error'} severity="error">{error}</Alert>: null}
       <TextField label="Имя пользователя" variant="outlined"
                  type="text"
+                 className={'search__input'}
                  placeholder={'facebook'}
                  value={userName}
                  onChange={(e) => dispatch(setUserName(e.target.value))}
       />
       <TextField label="Название репозитория" variant="outlined"
                  type="text"
+                 className={'search__input'}
                  placeholder={'react'}
                  value={repoName}
                  onChange={(e) => dispatch(setRepoName(e.target.value))}
       />
-      <Button disabled={!repoName.length || !userName.length} onClick={onSubmit} variant="contained">
-        <SearchIcon/>
-      </Button>
-      {
-        userName || repoName ? <Button onClick={onReset} variant="outlined">Очистить</Button> : null
-      }
+      <div className={'search__buttons'}>
+        <Button disabled={!repoName.length || !userName.length} onClick={onSubmit} variant="contained">
+          <SearchIcon/>
+        </Button>
+        {
+          userName || repoName ? <Button onClick={onReset} variant="outlined">Очистить</Button> : null
+        }
+      </div>
     </div>
   );
 };

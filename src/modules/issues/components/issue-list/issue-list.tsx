@@ -24,13 +24,14 @@ export const IssueList: React.FC = () => {
   const [showScrollButton, setShowScrollButton] = useState(false);
 
   const loadMoreIssues = () => {
-    if (hasMore && !isLoading) {
       pageRef.current += 1;
       dispatch(fetchIssues({repoName,userName, page: pageRef.current }));
-    }
   };
 
-  const bottomPointerRef = useIntersectionObserver(loadMoreIssues);
+  const bottomPointerRef = useIntersectionObserver(()=>{
+    console.log('КОЛБЕК СРАБОТАЛ')
+    loadMoreIssues()
+  });
 
   const scrollToTop = () => followScrollRef?.current?.scrollTo({top: 0, behavior: 'smooth'})
 
@@ -70,7 +71,7 @@ export const IssueList: React.FC = () => {
   if (!visibleIssues.length) return <EmptyPage/>
 
   return (
-    <div ref={followScrollRef} className="list">
+    <div ref={e => followScrollRef.current = e} className="list">
       {visibleIssues.map(issue => (
         <Link className="list__item" key={issue.id} to={`/issue/${issue.number}`}>
           <div className="list__item_title">

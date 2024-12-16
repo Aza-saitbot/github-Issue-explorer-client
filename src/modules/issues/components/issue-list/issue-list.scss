@@ -1,7 +1,7 @@
 .list {
   display: grid;
   position: relative;
-  max-height: calc(100vh - 80px);
+  max-height: calc(100vh - 180px);
   overflow-y: auto;
   height: 100%;
   padding: 0 20px;
@@ -92,6 +92,7 @@
 
 @media screen and (max-width: 768px) {
   .list {
+    max-height: calc(100vh - 300px);
     .list__item {
       flex-direction: column;
       justify-content: normal;
