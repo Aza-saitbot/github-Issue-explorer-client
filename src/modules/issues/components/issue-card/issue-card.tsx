@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link, useParams} from 'react-router-dom';
-import {useAppSelector} from '@src/modules/issues/hooks/hooks';
+import {useAppDispatch, useAppSelector} from '@src/modules/issues/hooks/hooks';
 import './issue-card.scss'
 import {ArrowIcon} from '@src/assets/icons/Arrow.icon';
 import moment from 'moment/moment';
@@ -10,10 +10,7 @@ import {IssueState} from '@src/modules/issues';
 
 export const IssueCard: React.FC = () => {
   const {id} = useParams<{ id: string }>();
-  const issue = useAppSelector((state) =>
-    state.issues.issues.find((i) => i.number === Number(id))
-  );
-
+  const issue = useAppSelector((state) => state.issues.issues.find((i) => i.number === Number(id)));
 
   if (!issue) return <p>Issue not found</p>;
 

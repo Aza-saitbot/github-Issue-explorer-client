@@ -1,21 +1,27 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import {IIssue, IIssueRequestDTO} from '@src/modules/issues/models';
+import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {IIssue, IIssuesRequestDTO} from '@src/modules/issues/models';
 import {fetchIssuesAPI} from '@src/modules/issues/api';
-import issuesMock from '@src/mock.json';
+// import issuesMock from '@src/mock.json';
 
-export const fetchIssues = createAsyncThunk<IIssue[], IIssueRequestDTO, {rejectValue: unknown}>(
+export const fetchIssues = createAsyncThunk<IIssue[], IIssuesRequestDTO, { rejectValue: string }>(
   'issues/fetchIssues',
-  async (requestDto,{rejectWithValue}) => {
+  async (requestDto, { rejectWithValue }) => {
     try {
       const response = await fetchIssuesAPI(requestDto);
-
-      return response.data
-    } catch (e) {
-      console.log('eОШИИИИБКА',e)
-      return rejectWithValue(e);
+      return response.data;
+    } catch (e: unknown) { 
+      if (e instanceof Error) { 
+        return rejectWithValue(e.message); 
+      }
+      return rejectWithValue('Произошла ошибка'); 
     }
   }
-);interface IInitialState {
+);
+
+
+interface IInitialState {
+  userName: string;
+  repoName: string;
   issues: IIssue[];
   isLoading: boolean;
   hasMore: boolean;
@@ -23,7 +29,9 @@ export const fetchIssues = createAsyncThunk<IIssue[], IIssueRequestDTO, {rejectV
 }
 
 const initialState: IInitialState = {
-  issues: issuesMock as IIssue[],
+  userName: '',
+  repoName: '',
+  issues: [],
   isLoading: false,
   hasMore: true,
   error: null,
@@ -32,12 +40,24 @@ const initialState: IInitialState = {
 const issuesSlice = createSlice({
   name: 'issues',
   initialState,
-  reducers: {},
+  reducers: {
+    setUserName(state, action: PayloadAction<string>) {
+      state.userName = action.payload;
+    },
+    setRepoName(state, action: PayloadAction<string>) {
+      state.repoName = action.payload;
+    },
+    setIssues(state, action: PayloadAction<IIssue[]>) {
+      state.issues = action.payload;
+    },
+    setError(state, action: PayloadAction<string | null>) {
+      state.error = action.payload;
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchIssues.pending, (state) => {
         state.isLoading = true;
-        state.error = null; // Сбрасываем ошибку при новом запросе
       })
       .addCase(fetchIssues.fulfilled, (state, action) => {
         state.issues.push(...action.payload);
@@ -46,9 +66,10 @@ const issuesSlice = createSlice({
       })
       .addCase(fetchIssues.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = (action.payload as string) || 'Произошла ошибка';
+        state.error = action.payload || 'Произошла ошибка';
       });
   },
 });
 
+export const {setUserName, setRepoName,setIssues,setError} = issuesSlice.actions;
 export default issuesSlice.reducer;

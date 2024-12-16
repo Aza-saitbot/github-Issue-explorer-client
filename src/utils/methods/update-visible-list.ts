@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from 'react';
 
 const calculateVisibleItems = <T>(page: number, items: T[]) => {
-  const countItemsPerPage = 15;
+  const countItemsPerPage = 30;
   const startIndex = (page - 1) * countItemsPerPage;
   const endIndex = startIndex + countItemsPerPage;
 
