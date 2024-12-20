@@ -1,6 +1,6 @@
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {IErrorResponse, IIssue, IIssuesRequestDTO} from '@src/modules/issues/models';
-import {fetchIssuesAPI} from '@src/modules/issues/api';
+import {fetchIssueAPI, fetchIssuesAPI} from '@src/modules/issues/api';
 import {AxiosError} from 'axios';
 import {RootState} from '@src/store/store';
 
@@ -9,6 +9,28 @@ export const fetchIssues = createAsyncThunk<IIssue[], IIssuesRequestDTO, { rejec
   async (requestDto, {rejectWithValue}) => {
     try {
       const response = await fetchIssuesAPI(requestDto);
+      return response.data;
+    } catch (e: unknown) {
+      const axiosError = e as AxiosError<IErrorResponse>;
+      const message = axiosError.response?.data?.message || 'Произошла ошибка';
+      return rejectWithValue(message);
+    }
+  }
+);
+
+export const fetchIssue = createAsyncThunk<IIssue, number, { rejectValue: string, state: RootState }>(
+  'issues/fetchIssue',
+  async (issueId, {rejectWithValue,getState}) => {
+    const {issues: {userName, repoName}} = getState() as RootState;
+    if (!userName || !repoName) {
+      return rejectWithValue('Не указано имя пользователя или репозитория');
+    }
+    try {
+      const response = await fetchIssueAPI({
+        issueId,
+        userName,
+        repoName
+      });
       return response.data;
     } catch (e: unknown) {
       const axiosError = e as AxiosError<IErrorResponse>;
@@ -45,6 +67,7 @@ interface IInitialState {
   userName: string;
   repoName: string;
   issues: IIssue[] | null;
+  issue: IIssue | null;
   isLoading: boolean;
   hasMore: boolean;
   error: string | null;
@@ -55,6 +78,7 @@ const initialState: IInitialState = {
   userName: '',
   repoName: '',
   issues: null,
+  issue: null,
   isLoading: false,
   hasMore: true,
   error: null,
@@ -90,6 +114,9 @@ const issuesSlice = createSlice({
       .addCase(fetchIssues.pending, (state) => {
         state.isLoading = true;
       })
+      .addCase(fetchIssue.pending, (state) => {
+        state.isLoading = true;
+      })
       .addCase(fetchIssues.fulfilled, (state, action) => {
         if (state.issues === null) {
           state.issues = [];
@@ -97,6 +124,14 @@ const issuesSlice = createSlice({
         state.issues.push(...action.payload);
         state.isLoading = false;
         state.hasMore = action.payload.length > 0;
+      })
+      .addCase(fetchIssue.fulfilled, (state, action) => {
+        state.issue = action.payload;
+        state.isLoading = false;
+      })
+      .addCase(fetchIssue.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload || 'Произошла ошибка';
       })
       .addCase(fetchIssues.rejected, (state, action) => {
         state.isLoading = false;

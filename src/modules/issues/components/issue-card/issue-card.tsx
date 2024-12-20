@@ -1,18 +1,27 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Link, useParams} from 'react-router-dom';
-import {useAppSelector} from '@src/modules/issues/hooks/hooks';
+import {useAppDispatch, useAppSelector} from '@src/modules/issues/hooks/hooks';
 import './issue-card.scss'
 import {ArrowIcon} from '@src/assets/icons/Arrow.icon';
 import moment from 'moment/moment';
 import ReactMarkdown from 'react-markdown';
-import {IssueState} from '@src/modules/issues';
+import {fetchIssue, IssueState} from '@src/modules/issues';
+import {LoaderPage} from '@src/components/loader-page/loader-page';
 
 
 export const IssueCard: React.FC = () => {
   const {id} = useParams<{ id: string }>();
-  const issue = useAppSelector((state) => state.issues.issues?.find((i) => i.number === Number(id)));
+  const dispatch = useAppDispatch()
+  const {issue, error, isLoading} = useAppSelector((state) => state.issues);
+
+  useEffect(()=>{
+    if (id){
+      dispatch(fetchIssue(Number(id)))
+    }
+  },[id])
 
   if (!issue) return <p>Issue not found</p>;
+  if (isLoading) return <LoaderPage />;
 
   return (
     <div className="details">

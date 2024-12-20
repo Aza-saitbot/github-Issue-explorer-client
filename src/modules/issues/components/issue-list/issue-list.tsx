@@ -23,7 +23,7 @@ export const IssueList: React.FC = () => {
 
   const bottomPointerRef = useIntersectionObserver(()=>{
     dispatch(incrementPage());
-    dispatch(fetchMoreIssues({}))
+    dispatch(fetchMoreIssues());
   });
 
   const scrollToTop = () => followScrollRef?.current?.scrollTo({ top: 0, behavior: 'smooth' });

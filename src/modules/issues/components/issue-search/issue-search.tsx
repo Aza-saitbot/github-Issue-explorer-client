@@ -1,13 +1,12 @@
-import {Alert, Button, TextField} from '@mui/material';
+import { Button, TextField} from '@mui/material';
 import './issue-search.scss'
 import {useAppDispatch, useAppSelector} from '@src/modules/issues/hooks/hooks';
-import {fetchIssues, resetPage, setError, setIssues, setRepoName, setUserName} from '../../store';
+import {fetchIssues, resetPage, setIssues, setRepoName, setUserName} from '../../slice';
 import SearchIcon from '@mui/icons-material/Search';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import {useEffect} from 'react';
 
 export const IssueSearch = () => {
-  const {userName, repoName, error,issues} = useAppSelector((state) => state.issues);
+  const {userName, repoName,issues} = useAppSelector((state) => state.issues);
   const dispatch = useAppDispatch();
 
   const onSubmit = () => {
@@ -24,19 +23,8 @@ export const IssueSearch = () => {
     dispatch(resetPage())
   };
 
-  useEffect(() => {
-    if (error) {
-      const timer = setTimeout(() => {
-        dispatch(setError(null));
-      }, 3000);
-
-      return () => clearTimeout(timer);
-    }
-  }, [error]);
-
   return (
     <div className={'search'}>
-      {error ? <Alert className={'error'} severity="error">{error}</Alert> : null}
       <TextField label="Имя пользователя" variant="outlined"
                  type="text"
                  className={'search__input'}
