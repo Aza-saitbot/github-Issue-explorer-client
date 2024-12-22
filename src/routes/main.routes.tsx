@@ -17,6 +17,12 @@ const MainRoutes = () => {
           path={ERoutePaths.ISSUE_ID}
           element={<SuspenseLazy LazyComponent={lazy(() => import('../pages/issue-card/issue-card.page'))}/>}
         />
+
+        <Route
+          path={ERoutePaths.STATISTICS}
+          element={<SuspenseLazy LazyComponent={lazy(() => import('../pages/statistics/statistics.page'))}/>}
+        />
+
         <Route path={'/*'} element={<>Not page 404</>}>
         </Route>
       </Route>

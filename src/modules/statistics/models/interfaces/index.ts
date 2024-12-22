@@ -1,0 +1,1 @@
+export type {IStatisticDto} from './statistic-dto.interface';

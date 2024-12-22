@@ -1,8 +1,9 @@
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {IErrorResponse, IIssue, IIssuesRequestDTO} from '@src/modules/issues/models';
+import {IIssue, IIssuesRequestDTO} from '@src/modules/issues/models';
 import {fetchIssueAPI, fetchIssuesAPI} from '@src/modules/issues/api';
 import {AxiosError} from 'axios';
 import {RootState} from '@src/store/store';
+import { IErrorResponse } from '@src/api/error-responce.interface';
 
 export const fetchIssues = createAsyncThunk<IIssue[], IIssuesRequestDTO, { rejectValue: string }>(
   'issues/fetchIssues',
@@ -103,7 +104,6 @@ const issuesSlice = createSlice({
     },
     incrementPage(state) {
       state.currentPage += 1;
-      console.log('INCREMENT', state.currentPage)
     },
     resetPage(state) {
       state.currentPage = 1;

@@ -1,4 +1,5 @@
 export enum ERoutePaths {
   ISSUES = '',
-  ISSUE_ID = 'issue/:id'
+  ISSUE_ID = 'issue/:id',
+  STATISTICS = 'statistics'
 }
