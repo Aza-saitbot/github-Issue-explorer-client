@@ -1,20 +1,23 @@
-import { Snackbar } from '@mui/material';
-import { useSelector, useDispatch } from 'react-redux';
-import { hideNotification } from './notification-slice';
-import './notification.scss'
+import {Snackbar} from '@mui/material';
+import {hideNotification} from './notification-slice';
+import {useAppDispatch, useAppSelector} from '@src/modules/issues/hooks/hooks';
 
 const Notification = () => {
-  const dispatch = useDispatch();
-  const { open, message } = useSelector((state: any) => state.notifications);
+  const dispatch = useAppDispatch();
+  const {open, message} = useAppSelector((state) => state.notification);
 
   const handleClose = () => {
     dispatch(hideNotification());
   };
 
+  if (!open) {
+    return null;
+  }
+
   return (
     <Snackbar
-      className={'notification'}
       open={open}
+      anchorOrigin={{vertical: 'top', horizontal: 'right'}}
       message={message}
       autoHideDuration={3000}
       onClose={handleClose}
