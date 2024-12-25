@@ -1,18 +1,15 @@
-import ContentPasteSearchTwoToneIcon from '@mui/icons-material/ContentPasteSearchTwoTone';
 import './empty-page.scss'
-export const EmptyPage = () => {
-  const settingIcon = {
-    width:120,
-    height:120
-  }
+import {FC} from 'react';
+
+
+interface IEmptyPageProps {
+  children?: JSX.Element
+}
+export const EmptyPage:FC<IEmptyPageProps> = ({children}) => {
+
   return (
     <div className={'empty-page'}>
-      <div>
-        <ContentPasteSearchTwoToneIcon sx={settingIcon}/>
-        <div className={'empty-page__title'}>
-          Здесь появиться последние результаты поиска
-        </div>
-      </div>
+      {children}
     </div>
   )
 }

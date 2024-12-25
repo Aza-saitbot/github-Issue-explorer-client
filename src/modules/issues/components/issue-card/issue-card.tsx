@@ -20,8 +20,7 @@ export const IssueCard: React.FC = () => {
     }
   },[id])
 
-  if (!issue) return <p>Issue not found</p>;
-  if (isLoading) return <LoaderPage />;
+  if (isLoading || !issue) return <LoaderPage />;
 
   return (
     <div className="details">

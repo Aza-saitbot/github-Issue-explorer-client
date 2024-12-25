@@ -1,6 +1,11 @@
 import axiosInstance from '@src/api/axios-instance';
-import {IStatisticDto} from '@src/modules/statistics/models';
+import {IStatisticDto, IStatisticsRequestDto} from '@src/modules/statistics/models';
 
-export const fetchStatisticsAPI = () => {
-  return axiosInstance.get<Array<IStatisticDto>>('/api/statistics');
+export const fetchStatisticsAPI = (dto: IStatisticsRequestDto) => {
+  return axiosInstance.get<Array<IStatisticDto>>('/logs', {
+    params: {
+      page: dto.page,
+      limit: dto?.limit || 30
+    }
+  });
 }

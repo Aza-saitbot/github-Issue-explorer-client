@@ -1,9 +1,18 @@
 .header {
   display: flex;
-  gap: 10px;
+  gap: 40px;
+  padding: 0 40px;
   align-items: center;
-  justify-content: center;
   background-color: rgba(0,0,0,0.16);
+
+  &__links {
+    display: flex;
+    gap: 20px;
+
+    &, a:hover {
+      opacity: 80%;
+    }
+  }
 
   &__icon {
     width: 50px;

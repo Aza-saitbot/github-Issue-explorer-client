@@ -3,16 +3,13 @@
   align-items: center;
   justify-items: center;
   margin: 80px 40px 40px 40px;
+  font-size: 28px;
+  font-weight: 300;
+  font-family: Calibri;
 ;
 
   & > div {
     align-items: center;
     justify-items: center;
-  }
-
-  &__title{
-    font-size: 28px;
-    font-weight: 300;
-    font-family: Calibri;
   }
 }

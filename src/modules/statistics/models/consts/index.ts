@@ -1,0 +1,1 @@
+export {STATISTIC_TYPE_COLOR} from './statistic-type-color';

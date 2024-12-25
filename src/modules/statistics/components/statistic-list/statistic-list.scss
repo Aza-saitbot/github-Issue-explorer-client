@@ -1,0 +1,51 @@
+.statistic-list {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+    height: 100%;
+    padding: 20px 20px;
+
+    &__item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 20px;
+        border-radius: 10px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.10);
+        cursor: pointer;
+
+        &_type {
+            display: flex;
+            align-items: center;
+            justify-items: center;
+
+            gap: 20px;
+            border-radius: 10px;
+            padding:5px;
+
+            &.green{
+                background-color: rgba(57,255,65,0.58);
+            }
+
+            &.orange{
+                background-color: rgba(255,122,41,0.58)
+            }
+
+
+            &.blue{
+                background-color: rgba(15,156,255,0.58);
+            }
+
+            &.red{
+                background-color: rgba(255,27,62,0.58);
+            }
+        }
+
+        &_date {
+
+        }
+
+    }
+}

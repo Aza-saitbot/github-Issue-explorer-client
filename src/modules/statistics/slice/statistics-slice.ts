@@ -1,14 +1,14 @@
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {IStatisticDto} from '@src/modules/statistics/models';
+import {IStatisticDto, IStatisticsRequestDto} from '@src/modules/statistics/models';
 import {fetchStatisticsAPI} from '@src/modules/statistics/api';
 import {AxiosError} from 'axios';
 import {IErrorResponse} from '@src/api/error-responce.interface';
 
-export const fetchStatistics = createAsyncThunk<Array<IStatisticDto>, void, { rejectValue: string }>(
+export const fetchStatistics = createAsyncThunk<Array<IStatisticDto>, IStatisticsRequestDto, { rejectValue: string }>(
   'statistics/fetchStatistics',
-  async (_, {rejectWithValue}) => {
+  async (dto, {rejectWithValue}) => {
     try {
-      const response = await fetchStatisticsAPI();
+      const response = await fetchStatisticsAPI(dto);
       return response.data;
     } catch (e: unknown) {
       const axiosError = e as AxiosError<IErrorResponse>;

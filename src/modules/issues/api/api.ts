@@ -1,4 +1,4 @@
-import {IIssue, IIssueRequestDTO, IIssuesRequestDTO} from '@src/modules/issues/models';
+import {IIssue, IIssueRequestDTO, IIssueSearchDto, IIssuesRequestDTO, IIssuesSearchRequestDTO} from '@src/modules/issues/models';
 import axios from 'axios';
 import axiosInstance from '@src/api/axios-instance';
 
@@ -126,12 +126,21 @@ import axiosInstance from '@src/api/axios-instance';
 export const fetchIssuesAPI = (dto: IIssuesRequestDTO) => {
   return axiosInstance.get(`/github/repos/${dto.userName}/${dto.repoName}/issues`, {
     params: {
-      page: dto.currentPage
+      page: dto.currentPage || 1
     },
   });
 };
 
 export const fetchIssueAPI = (dto: IIssueRequestDTO) => {
-  return axiosInstance.get(`/github/repos/${dto.userName}/${dto.repoName}/issues/${dto.issueId}`);
+  return axiosInstance.get(`/github/repos/${dto.userName}/${dto.repoName}/issue/${dto.issueId}`);
 }
+
+export const fetchSearchIssuesAPI = (query: string, page: number) => {
+  return axiosInstance.get<IIssueSearchDto>(`/github/search/issues/`, {
+    params: {
+      page: page || 1,
+      q: query,
+    },
+  });
+};
 

@@ -1,4 +1,4 @@
-import {Snackbar} from '@mui/material';
+import {Alert, Snackbar} from '@mui/material';
 import {hideNotification} from './notification-slice';
 import {useAppDispatch, useAppSelector} from '@src/modules/issues/hooks/hooks';
 
@@ -21,7 +21,11 @@ const Notification = () => {
       message={message}
       autoHideDuration={3000}
       onClose={handleClose}
-    />
+    >
+      <Alert severity="error" sx={{width: '100%'}}>
+        {message}
+      </Alert>
+    </Snackbar>
   );
 };
 

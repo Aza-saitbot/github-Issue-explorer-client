@@ -1,4 +1,4 @@
-import {IssueList, IssueSearch, IssueState} from '@src/modules/issues';
+import {IssueList, IssueSearch} from '@src/modules/issues';
 import './issues.scss'
 
 export const Issues = () => {
