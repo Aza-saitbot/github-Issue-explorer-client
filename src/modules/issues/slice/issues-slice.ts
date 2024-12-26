@@ -69,9 +69,11 @@ export const searchIssues = createAsyncThunk<IIssueSearchDto, _, { rejectValue: 
   'issues/searchIssues',
   async (_, {rejectWithValue, getState}) => {
     const {issues: {currentPage, query}} = getState() as RootState;
+    console.log('currentPage, query',currentPage, query)
     if (!query.length) return;
     try {
       const response = await fetchSearchIssuesAPI(query,currentPage);
+      console.log('response',response.data.items)
       return response.data.items;
     } catch (e: unknown) {
       const axiosError = e as AxiosError<IErrorResponse>;

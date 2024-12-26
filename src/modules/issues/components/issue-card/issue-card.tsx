@@ -12,8 +12,8 @@ import {LoaderPage} from '@src/components/loader-page/loader-page';
 export const IssueCard: React.FC = () => {
   const {id} = useParams<{ id: string }>();
   const dispatch = useAppDispatch()
-  const {issue, error, isLoading} = useAppSelector((state) => state.issues);
-
+  const {issue, isLoading} = useAppSelector((state) => state.issues);
+console.log('IssueCard id',id)
   useEffect(()=>{
     if (id){
       dispatch(fetchIssue(Number(id)))

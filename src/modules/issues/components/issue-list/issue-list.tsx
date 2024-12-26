@@ -12,8 +12,8 @@ export const IssueList= () => {
   const { issues, isLoading,query } = useAppSelector(state => state.issues);
   const fetchMore = () => {
     dispatch(incrementPage());
-    if (query.length > 0) {
-      dispatch(searchIssues({ query}));
+    if (query.length) {
+      dispatch(searchIssues({}));
     }else {
       dispatch(fetchMoreIssues({}));
     }
@@ -21,7 +21,7 @@ export const IssueList= () => {
   }
 
   const renderItem = (issue: IIssue) => (
-    <Link className="issue-list__item" key={issue.id} to={`/issue/${issue.number}`}>
+    <Link className="issue-list__item" key={issue.id} to={`/issues/${issue.number}`}>
       <div className="issue-list__item_title">
         <img className={'avatar'} src={issue.user.avatar_url} alt={'avatar'} />
         <div>

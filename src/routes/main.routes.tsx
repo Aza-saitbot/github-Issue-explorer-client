@@ -14,7 +14,7 @@ const MainRoutes = () => {
           element={<SuspenseLazy LazyComponent={lazy(() => import('../pages/issues/issues.page'))}/>}
         />
         <Route
-          path={ERoutePaths.ISSUE_ID}
+          path={ERoutePaths.ISSUES_ID}
           element={<SuspenseLazy LazyComponent={lazy(() => import('../pages/issue-card/issue-card.page'))}/>}
         />
 

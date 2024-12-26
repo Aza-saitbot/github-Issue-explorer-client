@@ -7,12 +7,6 @@
     width: 300px;
   }
 
-  &__buttons {
-    display: flex;
-    gap: 8px;
-
-
-  }
 }
 
 
@@ -21,10 +15,6 @@
   z-index: 9999;
   top: 10px;
   right: 10px;
-}
-.delete_button{
-  color: rgba(255,27,62,0.58);
-  border-color: rgba(255,27,62,0.58);
 }
 
 @media screen and (max-width: 768px) {
