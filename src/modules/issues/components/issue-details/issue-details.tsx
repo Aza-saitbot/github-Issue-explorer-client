@@ -1,7 +1,7 @@
-import React, {useEffect} from 'react';
+import {useEffect} from 'react';
 import {Link, useParams} from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from '@src/modules/issues/hooks/hooks';
-import './issue-card.scss'
+import './issue-details.scss';
 import {ArrowIcon} from '@src/assets/icons/Arrow.icon';
 import moment from 'moment/moment';
 import ReactMarkdown from 'react-markdown';
@@ -9,18 +9,22 @@ import {fetchIssue, IssueState} from '@src/modules/issues';
 import {LoaderPage} from '@src/components/loader-page/loader-page';
 
 
-export const IssueCard: React.FC = () => {
-  const {id} = useParams<{ id: string }>();
-  const dispatch = useAppDispatch()
+export const IssueDetails = () => {
+  const {id,repoName,userName} = useParams<{ id: string; userName: string; repoName: string }>();
+  const dispatch = useAppDispatch();
   const {issue, isLoading} = useAppSelector((state) => state.issues);
-console.log('IssueCard id',id)
-  useEffect(()=>{
-    if (id){
-      dispatch(fetchIssue(Number(id)))
-    }
-  },[id])
 
-  if (isLoading || !issue) return <LoaderPage />;
+  useEffect(() => {
+    if (id && userName && repoName) {
+      dispatch(fetchIssue({
+        issueId: Number(id),
+        userName,
+        repoName,
+      }));
+    }
+  }, [id, userName, repoName]);
+
+  if (isLoading || !issue) return <LoaderPage/>;
 
   return (
     <div className="details">

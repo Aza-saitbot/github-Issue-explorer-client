@@ -17,7 +17,7 @@ export const fetchIssueAPI = (dto: IIssueRequestDTO) => {
 }
 
 export const fetchSearchIssuesAPI = (query: string, page: number) => {
-  return axiosInstance.get<IIssueSearchDto>(`/issues/search`, {
+  return axiosInstance.get<IIssueSearchDto>('/issues/search', {
     params: {
       page: page || 1,
       query,

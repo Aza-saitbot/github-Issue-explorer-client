@@ -1,5 +1,5 @@
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {IIssue, IIssueSearchDto} from '@src/modules/issues/models';
+import {IIssue, IIssueRequestDTO, IIssueSearchDto} from '@src/modules/issues/models';
 import {fetchIssueAPI, fetchIssuesAPI, fetchSearchIssuesAPI} from '@src/modules/issues/api';
 import {AxiosError} from 'axios';
 import {RootState} from '@src/store/store';
@@ -26,17 +26,11 @@ export const fetchIssues = createAsyncThunk<IIssue[], _, { rejectValue: string, 
   }
 );
 
-export const fetchIssue = createAsyncThunk<IIssue, number, { rejectValue: string, state: RootState }>(
+export const fetchIssue = createAsyncThunk<IIssue, IIssueRequestDTO, { rejectValue: string, state: RootState }>(
   'issues/fetchIssue',
-  async (issueId, {rejectWithValue,getState}) => {
-    const {issues: {userName, repoName}} = getState() as RootState;
-    if (!userName || !repoName) return
+  async (dto, {rejectWithValue, getState}) => {
     try {
-      const response = await fetchIssueAPI({
-        issueId,
-        userName,
-        repoName
-      });
+      const response = await fetchIssueAPI(dto);
       return response.data;
     } catch (e: unknown) {
       const axiosError = e as AxiosError<IErrorResponse>;
@@ -46,15 +40,15 @@ export const fetchIssue = createAsyncThunk<IIssue, number, { rejectValue: string
   }
 );
 
-export const fetchMoreIssues = createAsyncThunk<IIssue[], _, { rejectValue: string ;state: RootState}>(
+export const fetchMoreIssues = createAsyncThunk<IIssue[], _, { rejectValue: string; state: RootState }>(
   'issues/fetchMoreIssues',
-  async (_, {rejectWithValue,getState}) => {
-    const {issues: {currentPage,userName,repoName}} = getState() as RootState;
+  async (_, {rejectWithValue, getState}) => {
+    const {issues: {currentPage, userName, repoName}} = getState() as RootState;
 
     if (!userName || !repoName) return
     try {
       const response = await fetchIssuesAPI({
-        currentPage,userName,repoName
+        currentPage, userName, repoName
       });
       return response.data;
     } catch (e: unknown) {
@@ -69,11 +63,11 @@ export const searchIssues = createAsyncThunk<IIssueSearchDto, _, { rejectValue: 
   'issues/searchIssues',
   async (_, {rejectWithValue, getState}) => {
     const {issues: {currentPage, query}} = getState() as RootState;
-    console.log('currentPage, query',currentPage, query)
+
     if (!query.length) return;
     try {
-      const response = await fetchSearchIssuesAPI(query,currentPage);
-      console.log('response',response.data.items)
+      const response = await fetchSearchIssuesAPI(query, currentPage);
+
       return response.data.items;
     } catch (e: unknown) {
       const axiosError = e as AxiosError<IErrorResponse>;
@@ -187,5 +181,5 @@ const issuesSlice = createSlice({
   },
 });
 
-export const {setUserName, setRepoName, setIssues, setError, incrementPage, resetPage,setQueryIssues} = issuesSlice.actions;
+export const {setUserName, setRepoName, setIssues, setError, incrementPage, resetPage, setQueryIssues} = issuesSlice.actions;
 export default issuesSlice.reducer;
