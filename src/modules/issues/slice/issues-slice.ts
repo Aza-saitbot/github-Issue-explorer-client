@@ -59,10 +59,10 @@ export const fetchMoreIssues = createAsyncThunk<IIssue[], _, { rejectValue: stri
   }
 )
 
-export const searchIssues = createAsyncThunk<IIssueSearchDto, _, { rejectValue: string; state: RootState }>(
+export const searchIssues = createAsyncThunk<IIssue[], string, { rejectValue: string; state: RootState }>(
   'issues/searchIssues',
-  async (_, {rejectWithValue, getState}) => {
-    const {issues: {currentPage, query}} = getState() as RootState;
+  async (query, {rejectWithValue, getState}) => {
+    const {issues: {currentPage}} = getState() as RootState;
 
     if (!query.length) return;
     try {

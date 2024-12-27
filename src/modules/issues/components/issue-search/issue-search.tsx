@@ -3,13 +3,16 @@ import './issue-search.scss'
 import {useAppDispatch, useAppSelector} from '@src/modules/issues/hooks/hooks';
 import {fetchIssues, resetPage, searchIssues, setIssues, setQueryIssues, setRepoName, setUserName} from '../../slice';
 import SearchIcon from '@mui/icons-material/Search';
+import {useState} from 'react';
 
 export const IssueSearch = () => {
-  const {userName,issues, repoName, query} = useAppSelector((state) => state.issues);
+  const {userName, repoName, query} = useAppSelector((state) => state.issues);
   const dispatch = useAppDispatch();
+  const [search,setSearch]=useState('')
 
   const onSubmit = () => {
-    if (query.length){
+    if (query.length) {
+      setSearch('')
       dispatch(setQueryIssues(''))
       dispatch(setIssues([]))
     }
@@ -23,8 +26,9 @@ export const IssueSearch = () => {
       dispatch(setRepoName(''))
       dispatch(setIssues([]))
     }
+    dispatch(setQueryIssues(search))
     dispatch(resetPage())
-    dispatch(searchIssues({}));
+    dispatch(searchIssues(search));
   };
 
   const onChangeUserName = (value: string) => {
@@ -37,17 +41,23 @@ export const IssueSearch = () => {
 
   const onChangeRepoName = (value: string) => {
     dispatch(setRepoName(value))
-   if (value.length === 0) {
-     dispatch(setIssues([]))
-     dispatch(resetPage())
-   }
+    if (value.length === 0) {
+      dispatch(setIssues([]))
+      dispatch(resetPage())
+    }
   }
 
-  const onChangeQuery = (value: string) => {
-    dispatch(setQueryIssues(value))
+  const onReset = () => {
+    dispatch(setUserName(''));
+    dispatch(setRepoName(''));
+    dispatch(setIssues([]));
+  };
 
-    if (value.length === 0) {
-      dispatch(resetPage())
+  const onChangeSearch = (value:string) => {
+    setSearch(value)
+    if (value.length === 0){
+      dispatch(setIssues([]));
+      dispatch(setQueryIssues(''))
     }
   }
 
@@ -68,21 +78,26 @@ export const IssueSearch = () => {
                    value={repoName}
                    onChange={(e) => onChangeRepoName(e.target.value)}
         />
-        <Button disabled={(!repoName.length || !userName.length) || issues.length===30} onClick={onSubmit} variant="contained">
-          <SearchIcon/>
-        </Button>
+        <div className={'search__buttons'}>
+          <Button disabled={!repoName.length || !userName.length} onClick={onSubmit} variant="contained">
+            <SearchIcon/>
+          </Button>
+          {userName || repoName ? <Button onClick={onReset} className={'delete_button'} variant="outlined">Reset</Button>: null}
+        </div>
       </div>
       <div className={'search'}>
         <TextField label="Поиск по слову" variant="outlined"
                    className={'search__select_input'}
                    placeholder={'баг'}
                    type="search"
-                   value={query}
-                   onChange={e => onChangeQuery(e.target.value)}
+                   value={search}
+                   onChange={e => onChangeSearch(e.target.value)}
         />
-        <Button disabled={!query.length || issues.length===30} onClick={onSearch} variant="contained">
-          <SearchIcon/>
-        </Button>
+        {!query.length && (
+          <Button disabled={search.length===0} onClick={onSearch} variant="contained">
+            <SearchIcon/>
+          </Button>
+        )}
       </div>
     </div>
 

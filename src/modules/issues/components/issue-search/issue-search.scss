@@ -7,6 +7,16 @@
     width: 300px;
   }
 
+  &__buttons {
+    display: flex;
+    gap: 8px;
+  }
+
+}
+
+.delete_button{
+  color: rgba(255,27,62,0.58);
+  border-color: rgba(255,27,62,0.58);
 }
 
 
