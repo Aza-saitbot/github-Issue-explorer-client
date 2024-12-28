@@ -29,7 +29,7 @@ export const StatisticList = () => {
 
 
   useEffect(() => {
-    dispatch(fetchStatistics({page: 1}));
+    dispatch(fetchStatistics({}));
     return () => {
       dispatch(clearStatistics());
     };

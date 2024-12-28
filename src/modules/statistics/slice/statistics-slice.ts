@@ -46,6 +46,7 @@ const statisticsSlice = createSlice({
   reducers: {
     clearStatistics(state) {
       state.statistics = [];
+      state.currentPage = 1;
       state.hasMore = true;
     },
     incrementPage(state) {
@@ -54,8 +55,7 @@ const statisticsSlice = createSlice({
       } else {
         state.currentPage = 0;
       }
-
-    }
+    },
   },
   extraReducers: (builder) => {
     builder

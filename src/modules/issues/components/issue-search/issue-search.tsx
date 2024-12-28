@@ -1,7 +1,7 @@
 import {Button, TextField} from '@mui/material';
 import './issue-search.scss';
 import {useAppDispatch, useAppSelector} from '@src/modules/issues/hooks/hooks';
-import {fetchIssues, resetPage, searchIssues, setIssues, setQueryIssues, setRepoName, setUserName} from '../../slice';
+import {fetchIssues, resetPage, searchIssues, clearIssues, setQueryIssues, setRepoName, setUserName} from '../../slice';
 import SearchIcon from '@mui/icons-material/Search';
 import {useState} from 'react';
 
@@ -15,18 +15,24 @@ export const IssueSearch = () => {
     if (query.length) {
       setSearch('');
       dispatch(setQueryIssues(''));
-      dispatch(setIssues([]));
+      dispatch(clearIssues());
+    }
+    if (!userName.length || !repoName.length) {
+      return;
     }
     setHideButton(true);
     dispatch(resetPage());
-    dispatch(fetchIssues({}));
+    dispatch(fetchIssues({
+      userName,
+      repoName,
+    }));
   };
 
   const onSearch = () => {
     if (userName.length && repoName.length) {
       dispatch(setUserName(''));
       dispatch(setRepoName(''));
-      dispatch(setIssues([]));
+      dispatch(clearIssues());
     }
     dispatch(setQueryIssues(search));
     dispatch(resetPage());
@@ -40,7 +46,7 @@ export const IssueSearch = () => {
       setHideButton(false);
     }
     if (value.length === 0) {
-      dispatch(setIssues([]));
+      dispatch(clearIssues());
       dispatch(resetPage());
     }
   };
@@ -51,7 +57,7 @@ export const IssueSearch = () => {
       setHideButton(false);
     }
     if (value.length === 0) {
-      dispatch(setIssues([]));
+      dispatch(clearIssues());
       dispatch(resetPage());
     }
   };
@@ -60,13 +66,13 @@ export const IssueSearch = () => {
     setHideButton(false);
     dispatch(setUserName(''));
     dispatch(setRepoName(''));
-    dispatch(setIssues([]));
+    dispatch(clearIssues());
   };
 
   const onChangeSearch = (value:string) => {
     setSearch(value);
     if (value.length === 0){
-      dispatch(setIssues([]));
+      dispatch(clearIssues());
       dispatch(setQueryIssues(''));
     }
   };

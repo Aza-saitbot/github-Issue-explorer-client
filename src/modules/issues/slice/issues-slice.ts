@@ -1,17 +1,14 @@
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {IIssue, IIssueRequestDTO} from '@src/modules/issues/models';
+import {IIssue, IIssueRequestDTO, IIssuesRequestDTO} from '@src/modules/issues/models';
 import {fetchIssueAPI, fetchIssuesAPI, fetchSearchIssuesAPI} from '@src/modules/issues/api';
 import {AxiosError} from 'axios';
 import {RootState} from '@src/store/store';
 import {IErrorResponse} from '@src/api/error-responce.interface';
 
-export const fetchIssues = createAsyncThunk<IIssue[], _, { rejectValue: string; state: RootState }>(
+export const fetchIssues = createAsyncThunk<IIssue[], IIssuesRequestDTO, { rejectValue: string}>(
   'issues/fetchIssues',
-  async (_, {rejectWithValue, getState}) => {
-    const {issues: {userName, repoName}} = getState() as RootState;
-
-    if (!userName || !repoName) return;
-
+  async (dto, {rejectWithValue}) => {
+    const {userName, repoName} = dto;
     try {
       const response = await fetchIssuesAPI({
         userName,
@@ -40,10 +37,11 @@ export const fetchIssue = createAsyncThunk<IIssue, IIssueRequestDTO, { rejectVal
   }
 );
 
-export const fetchMoreIssues = createAsyncThunk<IIssue[], _, { rejectValue: string; state: RootState }>(
+export const fetchMoreIssues = createAsyncThunk<IIssue[], IIssuesRequestDTO, { rejectValue: string; state: RootState}>(
   'issues/fetchMoreIssues',
-  async (_, {rejectWithValue, getState}) => {
-    const {issues: {currentPage, userName, repoName}} = getState() as RootState;
+  async (dto, {rejectWithValue, getState}) => {
+    const {issues: {currentPage}} = getState() as RootState;
+    const { userName, repoName} = dto;
 
     if (!userName || !repoName) return;
     try {
@@ -111,8 +109,8 @@ const issuesSlice = createSlice({
     setRepoName(state, action: PayloadAction<string>) {
       state.repoName = action.payload;
     },
-    setIssues(state, action: PayloadAction<IIssue[]>) {
-      state.issues = action.payload;
+    clearIssues(state) {
+      state.issues = [];
     },
     setError(state, action: PayloadAction<string | null>) {
       state.error = action.payload;
@@ -185,5 +183,5 @@ const issuesSlice = createSlice({
   },
 });
 
-export const {setUserName, setRepoName, setIssues, setError, incrementPage, resetPage, setQueryIssues} = issuesSlice.actions;
+export const {setUserName, setRepoName, clearIssues, setError, incrementPage, resetPage, setQueryIssues} = issuesSlice.actions;
 export default issuesSlice.reducer;

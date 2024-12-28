@@ -6,15 +6,18 @@ import ContentPasteSearchTwoToneIcon from '@mui/icons-material/ContentPasteSearc
 
 export const IssueList = () => {
   const dispatch = useAppDispatch();
-  const {issues, isLoading, query} = useAppSelector(state => state.issues);
+  const {issues, isLoading, query, repoName, userName} = useAppSelector(state => state.issues);
   const fetchMore = () => {
     dispatch(incrementPage());
     if (query.length) {
-      dispatch(searchIssues({}));
-    } else {
-      dispatch(fetchMoreIssues({}));
+      dispatch(searchIssues(query));
+    } else if (repoName.length && userName.length) {
+      dispatch(fetchMoreIssues({
+        userName,
+        repoName,
+      }));
     }
-  }
+  };
   const emptyPageContent = <div>
     <ContentPasteSearchTwoToneIcon sx={{
       width: 120,
@@ -23,7 +26,7 @@ export const IssueList = () => {
     <div>
       Здесь появиться последние результаты поиска
     </div>
-  </div>
+  </div>;
 
   return (
     <List
