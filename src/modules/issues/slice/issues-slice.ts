@@ -1,16 +1,16 @@
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {IIssue, IIssueRequestDTO, IIssueSearchDto} from '@src/modules/issues/models';
+import {IIssue, IIssueRequestDTO} from '@src/modules/issues/models';
 import {fetchIssueAPI, fetchIssuesAPI, fetchSearchIssuesAPI} from '@src/modules/issues/api';
 import {AxiosError} from 'axios';
 import {RootState} from '@src/store/store';
 import {IErrorResponse} from '@src/api/error-responce.interface';
 
-export const fetchIssues = createAsyncThunk<IIssue[], _, { rejectValue: string, state: RootState }>(
+export const fetchIssues = createAsyncThunk<IIssue[], _, { rejectValue: string; state: RootState }>(
   'issues/fetchIssues',
   async (_, {rejectWithValue, getState}) => {
     const {issues: {userName, repoName}} = getState() as RootState;
 
-    if (!userName || !repoName) return
+    if (!userName || !repoName) return;
 
     try {
       const response = await fetchIssuesAPI({
@@ -26,9 +26,9 @@ export const fetchIssues = createAsyncThunk<IIssue[], _, { rejectValue: string, 
   }
 );
 
-export const fetchIssue = createAsyncThunk<IIssue, IIssueRequestDTO, { rejectValue: string, state: RootState }>(
+export const fetchIssue = createAsyncThunk<IIssue, IIssueRequestDTO, { rejectValue: string; state: RootState }>(
   'issues/fetchIssue',
-  async (dto, {rejectWithValue, getState}) => {
+  async (dto, {rejectWithValue}) => {
     try {
       const response = await fetchIssueAPI(dto);
       return response.data;
@@ -45,7 +45,7 @@ export const fetchMoreIssues = createAsyncThunk<IIssue[], _, { rejectValue: stri
   async (_, {rejectWithValue, getState}) => {
     const {issues: {currentPage, userName, repoName}} = getState() as RootState;
 
-    if (!userName || !repoName) return
+    if (!userName || !repoName) return;
     try {
       const response = await fetchIssuesAPI({
         currentPage, userName, repoName
@@ -57,14 +57,14 @@ export const fetchMoreIssues = createAsyncThunk<IIssue[], _, { rejectValue: stri
       return rejectWithValue(message);
     }
   }
-)
+);
 
-export const searchIssues = createAsyncThunk<IIssue[], string, { rejectValue: string; state: RootState }>(
+export const searchIssues = createAsyncThunk<IIssue[], string, { rejectValue: string | null; state: RootState }>(
   'issues/searchIssues',
   async (query, {rejectWithValue, getState}) => {
     const {issues: {currentPage}} = getState() as RootState;
 
-    if (!query.length) return;
+    if (!query.length) return rejectWithValue(null);
     try {
       const response = await fetchSearchIssuesAPI(query, currentPage);
 
@@ -176,8 +176,12 @@ const issuesSlice = createSlice({
       })
       .addCase(searchIssues.rejected, (state, action) => {
         state.isLoading = false;
+        if (action.payload === null) {
+          state.hasMore = false;
+          return;
+        }
         state.error = action.payload || 'Произошла ошибка';
-      })
+      });
   },
 });
 

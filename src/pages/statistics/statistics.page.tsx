@@ -1,8 +1,7 @@
-import {Statistics} from '@src/modules/statistics';
-
+import {StatisticList} from '@src/modules/statistics';
 
 const StatisticsPage = () => {
-  return <Statistics/>
+  return <StatisticList/>;
 };
 
 export default StatisticsPage;

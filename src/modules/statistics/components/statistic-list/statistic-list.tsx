@@ -1,24 +1,22 @@
 import {useAppDispatch, useAppSelector} from '@src/modules/issues/hooks/hooks';
 import moment from 'moment/moment';
-import './statistic-list.scss'
+import './statistic-list.scss';
 import {List} from '@src/components/list/list';
-import {fetchStatistics} from '@src/modules/statistics';
-import {useEffect, useState} from 'react';
+import {clearStatistics, fetchStatistics, incrementPage} from '@src/modules/statistics';
+import {useEffect} from 'react';
 import {IStatisticDto, STATISTIC_TYPE_COLOR} from '@src/modules/statistics/models';
 
 export const StatisticList = () => {
   const dispatch = useAppDispatch();
-  const { statistics, isLoading } = useAppSelector(state => state.statistics);
-  const [page,setPage]=useState(0);
+  const {statistics, isLoading} = useAppSelector(state => state.statistics);
+
   const fetchMore = () => {
-    setPage(prevState => prevState + 1);
-    dispatch(fetchStatistics({
-      page: page + 1
-    }));
+    dispatch(incrementPage());
+    dispatch(fetchStatistics({}));
   };
 
-  const renderItem = (statistic: IStatisticDto ) => (
-    <div className="statistic-list__item" key={statistic.id}>
+  const renderItem = (statistic: IStatisticDto) => (
+    <div className="statistic-list__item" key={statistic._id}>
       <div className="statistic-list__item_type">
         <span>ip: {statistic.ip}</span>
         <span className={`statistic-list__item_type ${STATISTIC_TYPE_COLOR[statistic.type]}`}>type: {statistic.type}</span>
@@ -29,10 +27,13 @@ export const StatisticList = () => {
     </div>
   );
 
+
   useEffect(() => {
-    setPage(prevState => prevState + 1);
-    dispatch(fetchStatistics({page: 1}))
-  },[])
+    dispatch(fetchStatistics({page: 1}));
+    return () => {
+      dispatch(clearStatistics());
+    };
+  }, [dispatch]);
 
   return (
     <List

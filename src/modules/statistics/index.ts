@@ -1,2 +1,2 @@
-export {Statistics} from './components/statistics';
+export {StatisticList} from './components/';
 export * from './slice';

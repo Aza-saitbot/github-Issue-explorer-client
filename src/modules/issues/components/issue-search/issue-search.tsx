@@ -1,5 +1,5 @@
 import {Button, TextField} from '@mui/material';
-import './issue-search.scss'
+import './issue-search.scss';
 import {useAppDispatch, useAppSelector} from '@src/modules/issues/hooks/hooks';
 import {fetchIssues, resetPage, searchIssues, setIssues, setQueryIssues, setRepoName, setUserName} from '../../slice';
 import SearchIcon from '@mui/icons-material/Search';
@@ -8,58 +8,68 @@ import {useState} from 'react';
 export const IssueSearch = () => {
   const {userName, repoName, query} = useAppSelector((state) => state.issues);
   const dispatch = useAppDispatch();
-  const [search,setSearch]=useState('')
+  const [search,setSearch]=useState('');
+  const [isHideButton,setHideButton]=useState(false);
 
   const onSubmit = () => {
     if (query.length) {
-      setSearch('')
-      dispatch(setQueryIssues(''))
-      dispatch(setIssues([]))
+      setSearch('');
+      dispatch(setQueryIssues(''));
+      dispatch(setIssues([]));
     }
-    dispatch(resetPage())
+    setHideButton(true);
+    dispatch(resetPage());
     dispatch(fetchIssues({}));
   };
 
   const onSearch = () => {
     if (userName.length && repoName.length) {
-      dispatch(setUserName(''))
-      dispatch(setRepoName(''))
-      dispatch(setIssues([]))
+      dispatch(setUserName(''));
+      dispatch(setRepoName(''));
+      dispatch(setIssues([]));
     }
-    dispatch(setQueryIssues(search))
-    dispatch(resetPage())
+    dispatch(setQueryIssues(search));
+    dispatch(resetPage());
     dispatch(searchIssues(search));
   };
 
   const onChangeUserName = (value: string) => {
-    dispatch(setUserName(value))
-    if (value.length === 0) {
-      dispatch(setIssues([]))
-      dispatch(resetPage())
+    dispatch(setUserName(value));
+    setHideButton(false);
+    if (isHideButton){
+      setHideButton(false);
     }
-  }
+    if (value.length === 0) {
+      dispatch(setIssues([]));
+      dispatch(resetPage());
+    }
+  };
 
   const onChangeRepoName = (value: string) => {
-    dispatch(setRepoName(value))
-    if (value.length === 0) {
-      dispatch(setIssues([]))
-      dispatch(resetPage())
+    dispatch(setRepoName(value));
+    if (isHideButton){
+      setHideButton(false);
     }
-  }
+    if (value.length === 0) {
+      dispatch(setIssues([]));
+      dispatch(resetPage());
+    }
+  };
 
   const onReset = () => {
+    setHideButton(false);
     dispatch(setUserName(''));
     dispatch(setRepoName(''));
     dispatch(setIssues([]));
   };
 
   const onChangeSearch = (value:string) => {
-    setSearch(value)
+    setSearch(value);
     if (value.length === 0){
       dispatch(setIssues([]));
-      dispatch(setQueryIssues(''))
+      dispatch(setQueryIssues(''));
     }
-  }
+  };
 
   return (
     <div>
@@ -79,9 +89,11 @@ export const IssueSearch = () => {
                    onChange={(e) => onChangeRepoName(e.target.value)}
         />
         <div className={'search__buttons'}>
-          <Button disabled={!repoName.length || !userName.length} onClick={onSubmit} variant="contained">
-            <SearchIcon/>
-          </Button>
+          {!isHideButton && (
+            <Button disabled={!repoName.length || !userName.length} onClick={onSubmit} variant="contained">
+              <SearchIcon/>
+            </Button>
+          )}
           {userName || repoName ? <Button onClick={onReset} className={'delete_button'} variant="outlined">Reset</Button>: null}
         </div>
       </div>
