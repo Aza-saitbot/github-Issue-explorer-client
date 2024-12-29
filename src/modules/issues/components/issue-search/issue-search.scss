@@ -4,7 +4,7 @@
   gap: 8px;
   margin: 10px 40px;
 
-  &__select {
+  &__query {
     display: flex;
     gap: 8px;
     margin: 10px 40px;
@@ -38,10 +38,21 @@
 @media screen and (max-width: 768px) {
   .search {
     display: grid;
+    margin: 0;
+    gap: 15px;
 
     &__input {
-      width: 100%;
+      max-width: 100%;
+    }
 
+    &__query {
+      display: flex;
+      gap: 15px;
+      margin: 15px 0 0 0;
+
+      &__input {
+        width: 100%;
+      }
     }
 
     &__buttons {

@@ -33,20 +33,3 @@
     color: white;
   }
 }
-
-@media screen and (max-width: 768px) {
-  .list {
-    max-height: calc(100vh - 300px);
-    .list__item {
-      flex-direction: column;
-      justify-content: normal;
-      align-items: start;
-
-      .list__item_info {
-        margin-left: 65px;
-
-      }
-    }
-  }
-
-}

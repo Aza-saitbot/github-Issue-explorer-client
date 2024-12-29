@@ -47,10 +47,10 @@
   }
 }
 
-@media screen and (max-width: 800px) {
-  .issue_list {
+@media screen and (max-width: 768px) {
+  .issue-list {
+    max-height: calc(100vh - 140px);
 
-    max-height: calc(100vh - 340px);
     &__item {
       flex-direction: column;
       justify-content: normal;

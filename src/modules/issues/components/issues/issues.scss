@@ -1,4 +1,24 @@
 .issues {
   display: grid;
   gap: 15px;
+
+  &__mobile {
+    display: none;
+  }
+
+  &__desktop {
+    display: block;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .issues {
+    &__mobile {
+      display: block;
+    }
+
+    &__desktop {
+      display: none;
+    }
+  }
 }

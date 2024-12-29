@@ -103,9 +103,9 @@ export const IssueSearch = () => {
           {userName || repoName ? <Button onClick={onReset} className={'delete_button'} variant="outlined">Reset</Button>: null}
         </div>
       </div>
-      <div className={'search__select'}>
+      <div className={'search__query'}>
         <TextField label="Поиск по слову" variant="outlined"
-                   className={'search__select_input'}
+                   className={'search__query__input'}
                    placeholder={'баг'}
                    type="search"
                    value={search}
