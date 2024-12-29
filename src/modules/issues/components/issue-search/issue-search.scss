@@ -1,10 +1,17 @@
 .search {
   display: flex;
+  flex-wrap: wrap;
   gap: 8px;
   margin: 10px 40px;
 
+  &__select {
+    display: flex;
+    gap: 8px;
+    margin: 10px 40px;
+  }
+
   &__input {
-    width: 300px;
+    max-width: 300px;
   }
 
   &__buttons {
@@ -13,6 +20,7 @@
   }
 
 }
+
 
 .delete_button{
   color: rgba(255,27,62,0.58);
@@ -29,8 +37,11 @@
 
 @media screen and (max-width: 768px) {
   .search {
+    display: grid;
+
     &__input {
       width: 100%;
+
     }
 
     &__buttons {
