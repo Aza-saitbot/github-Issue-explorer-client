@@ -3,15 +3,21 @@
   flex-direction: column;
   gap: 10px;
   margin: 10px 30px;
+  max-width: 800px;
 
   &__header {
-    display: flex;
+    display: grid;
     gap: 10px;
-    align-items: center;
+    align-items: start;
 
     &__title {
       display: flex;
       gap: 10px;
+
+      h4 {
+        display: grid;
+        align-items: center;
+      }
     }
   }
 
@@ -20,24 +26,17 @@
     gap: 10px;
 
     &__body {
-      display: flex;
-      gap: 10px;
+      max-width: 800px;
+      width: 100%;
+      overflow-wrap: break-word;
 
-      &__text {
-        width: 100%;
-        max-width: 840px;
-        word-wrap: break-word;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        border-radius: 15px;
-        border: 1px solid rgba(0, 0, 0, 0.10);
-        padding: 10px;
-        margin-bottom: 10px;
-      }
+      border-radius: 15px;
+      border: 1px solid rgba(0, 0, 0, 0.10);
+      padding: 10px;
+      margin-bottom: 10px;
     }
 
-    &__sidebar{
+    &__sidebar {
       display: grid;
       align-items: start;
       align-content: start;
@@ -53,6 +52,10 @@
         border-bottom: 1px solid rgba(0, 0, 0, 0.10);
         padding: 10px;
         margin-bottom: 10px;
+
+        &:last-child {
+          border-bottom: none;
+        }
       }
 
 
@@ -77,22 +80,40 @@
   }
 }
 
-.come-back {
-  border: 1px solid rgba(0, 0, 0, 0.10);
-  border-radius: 50%;
-  background-color: #fff;
-  color: gray;
-  width: 40px;
-  height: 40px;
-  font-size: 24px;
-  transform: rotate(270deg);
-  cursor: pointer;
-  display: grid;
-  align-items: center;
-  justify-content: center;
+.comeback-icon {
+  transform: rotate(180deg);
+
+  a {
+    display: grid;
+    align-items: center;
+  }
+
+  svg {
+    width: 20px;
+    height: 20px;
+    color: gray;
+  }
 }
 
 .colm {
   display: grid;
   gap: 10px;
+}
+
+.flex {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+@media screen and (max-width: 600px) {
+  .details {
+    max-width: 350px;
+
+    &__content {
+      &__body {
+        max-width: 350px;
+      }
+    }
+  }
 }

@@ -11,15 +11,15 @@ export const IssueItem = memo((issue: IIssue) => {
   return (
     <Link className="issue-list__item" key={issue.id} to={`/issues/${userName}/${repoName}/${issue.number}`}>
       <div className="issue-list__item_title">
-        <img className={'avatar'} src={issue.user.avatar_url} alt={'avatar'} />
+        <img className="avatar" src={issue.user.avatar_url} alt={'avatar'} />
         <div>
           <div>{issue.title}</div>
           <span>id: {issue.number}</span>
         </div>
       </div>
-      <div className={'issue-list__item_info'}>
+      <div className="issue-list__item_info">
         <p>{moment(issue.created_at).format('DD.MM.YYYY')}</p>
-        <span>{issue.comments}</span>
+        <span>{`comments: ${issue.comments}`}</span>
       </div>
     </Link>
   );

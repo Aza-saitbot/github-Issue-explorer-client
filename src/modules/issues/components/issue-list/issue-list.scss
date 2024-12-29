@@ -5,62 +5,12 @@
   overflow-y: auto;
   height: 100%;
   padding: 0 20px;
-
-  &__item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 20px;
-    border-bottom: 1px solid rgba(0,0,0,0.10);
-    cursor: pointer;
-
-    &:hover {
-      background-color: rgba(0,0,0,0.05);
-    }
-
-    &_title {
-      display: flex;
-      align-items: center;
-      font-size: 16px;
-      font-weight: normal;
-      gap: 5px;
-
-      span {
-        color: gray;
-        font-size: 14px;
-      }
-
-      .avatar {
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        margin-right: 10px;
-      }
-    }
-
-    &_info {
-      display: flex;
-      gap: 5px;
-      font-size: 14px;
-      align-items: center;
-    }
-  }
 }
 
 @media screen and (max-width: 768px) {
   .issue-list {
     max-height: calc(100vh - 140px);
-
-    &__item {
-      flex-direction: column;
-      justify-content: normal;
-      align-items: start;
-
-      &_info {
-        margin-left: 65px;
-
-      }
-    }
+    padding: 0 10px;
   }
 
 }
